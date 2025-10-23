@@ -1,0 +1,1 @@
+{"id":"scene-02","scene":"本文導入","role":"video","deadline_sec":5400,"retry_max":2,"llm":"7b","inputs":{"prompt":"屋内。被写体なし。15秒。"},"notes":"破綻時は尺短縮"}
