@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+LOGDIR="${ROOT:-/srv/project}/logs/nodes"; mkdir -p "$LOGDIR"; exec >>"$LOGDIR"/worker-"$ROLE".log 2>&1; set -x
 set -euo pipefail
 ROOT="${ROOT:-/srv/project}"
 ROLE="${ROLE:?video|audio|subtitle|compose のいずれか}"
@@ -33,7 +34,7 @@ while :; do
     audio)    ./pipelines/audio_tts.sh        "$tgt"        || rc=$?;;
     subtitle) ./pipelines/subtitle_make.sh    "$tgt"        || rc=$?;;
     compose)  ./pipelines/compose_edit.sh     "$tgt"        || rc=$?;;
-  endcase
+  esac
 
   if (( rc != 0 )); then
     tmp=$(mktemp); jq '.retry_count=(.retry_count//0)+1' "$tgt" > "$tmp" && mv "$tmp" "$tgt"
