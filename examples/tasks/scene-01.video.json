@@ -1,0 +1,14 @@
+{
+  "id":"scene-01",
+  "scene":"導入30秒",
+  "role":"video",
+  "deadline_sec":5400,
+  "retry_max":2,
+  "llm":"7b",
+  "inputs":{
+    "prompt":"夕景の街並み。30秒。緩いパン。",
+    "broll":["assets/video/city_skyline.mp4"],
+    "style_ref":["assets/img/ref_colorcard.png"]
+  },
+  "notes":"720p生成可。後で1080pに揃える。"
+}

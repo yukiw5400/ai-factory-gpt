@@ -1,0 +1,8 @@
+{"type":"object","required":["id","ok","duration_sec"],
+ "properties":{
+  "id":{"type":"string"},
+  "ok":{"type":"boolean"},
+  "duration_sec":{"type":"number"},
+  "error":{"type":"string"},
+  "next_suggestion":{"type":"string"}
+}}

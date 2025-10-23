@@ -1,0 +1,12 @@
+{"type":"object","required":["id","scene","role","deadline_sec","retry_max","inputs","llm"],
+ "properties":{
+  "id":{"type":"string"},
+  "scene":{"type":"string"},
+  "role":{"type":"string","enum":["video","audio","subtitle","compose"]},
+  "deadline_sec":{"type":"integer"},
+  "retry_max":{"type":"integer"},
+  "inputs":{"type":"object"},
+  "llm":{"type":"string","enum":["14b","7b","3b"]},
+  "notes":{"type":"string"},
+  "retry_count":{"type":"integer"}
+}}

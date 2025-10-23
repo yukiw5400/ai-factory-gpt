@@ -1,0 +1,12 @@
+[Unit]
+Description=AI worker subtitle
+After=network.target
+[Service]
+User=aiuser
+WorkingDirectory=/srv/project
+Environment=ROLE=subtitle
+ExecStart=/srv/project/bin/worker.sh
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

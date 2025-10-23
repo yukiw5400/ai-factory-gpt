@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+delivery/
+results/
+tasks/queue/
+tasks/wip/
+tasks/dead/
+logs/
