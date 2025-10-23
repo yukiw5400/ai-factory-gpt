@@ -6,3 +6,4 @@ tasks/queue/
 tasks/wip/
 tasks/dead/
 logs/
+tasks/done/

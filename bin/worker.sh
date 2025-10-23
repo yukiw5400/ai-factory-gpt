@@ -2,7 +2,7 @@
 set -euo pipefail
 ROOT="${ROOT:-/srv/project}"
 ROLE="${ROLE:?video|audio|subtitle|compose のいずれか}"
-mkdir -p "$ROOT/tasks/queue" "$ROOT/tasks/wip" "$ROOT/tasks/dead" "$ROOT/logs/nodes" "$ROOT/results/scenes"
+mkdir -p "$ROOT/tasks/queue" "$ROOT/tasks/wip" "$ROOT/tasks/dead" "$ROOT/tasks/done" "$ROOT/logs/nodes" "$ROOT/results/scenes"
 HB="$ROOT/logs/heartbeat.$(hostname -s).$ROLE"
 touch "$HB"
 
@@ -19,7 +19,7 @@ while :; do
   base=$(basename "$job"); tgt="$ROOT/tasks/wip/$base"
   mv "$job" "$tgt" 2>/dev/null || continue
 
-  id=$(jq -r '.id' "$tgt"); scene=$(jq -r '.scene' "$tgt"); llm=$(jq -r '.llm' "$tgt")
+  id=$(jq -r '.id' "$tgt"); llm=$(jq -r '.llm' "$tgt")
   case "$llm" in
     14b) EP="http://192.168.3.101:9201";;
     7b)  EP="http://192.168.3.101:9202";;
@@ -33,7 +33,7 @@ while :; do
     audio)    ./pipelines/audio_tts.sh        "$tgt"        || rc=$?;;
     subtitle) ./pipelines/subtitle_make.sh    "$tgt"        || rc=$?;;
     compose)  ./pipelines/compose_edit.sh     "$tgt"        || rc=$?;;
-  esac
+  endcase
 
   if (( rc != 0 )); then
     tmp=$(mktemp); jq '.retry_count=(.retry_count//0)+1' "$tgt" > "$tmp" && mv "$tmp" "$tgt"
@@ -43,4 +43,5 @@ while :; do
   fi
 
   echo "$(date -Iseconds) $ROLE $id OK" >> "$ROOT/logs/nodes/done.log"
+  mv "$tgt" "$ROOT/tasks/done/$base" 2>/dev/null || true
 done
